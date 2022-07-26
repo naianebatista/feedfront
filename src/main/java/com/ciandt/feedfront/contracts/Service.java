@@ -2,16 +2,23 @@ package com.ciandt.feedfront.contracts;
 
 import com.ciandt.feedfront.excecoes.ArquivoException;
 import com.ciandt.feedfront.excecoes.BusinessException;
+import com.ciandt.feedfront.excecoes.EmployeeNaoEncontradoException;
 import com.ciandt.feedfront.models.Employee;
+import com.ciandt.feedfront.services.EmployeeService;
+import com.ciandt.feedfront.services.FeedbackService;
 
+import java.io.IOException;
 import java.util.List;
 
-public interface Service<E> {
-    List<E> listar() throws ArquivoException;
 
-    E buscar(String id) throws ArquivoException, BusinessException;
+public interface Service<E>  {
 
-    E salvar(E e) throws ArquivoException, BusinessException, IllegalArgumentException;
+    // interface que define um contrato entre os serviços da nossa aplicação
+    List<E> listar() throws IOException;
+
+    E buscar(String id) throws IOException, BusinessException, EmployeeNaoEncontradoException;
+
+    E salvar(E e) throws IOException, BusinessException, IllegalArgumentException;
 
     E atualizar(E e) throws ArquivoException, BusinessException, IllegalArgumentException;
 

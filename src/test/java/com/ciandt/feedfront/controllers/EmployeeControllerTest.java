@@ -6,6 +6,7 @@ import com.ciandt.feedfront.controller.EmployeeController;
 import com.ciandt.feedfront.excecoes.ArquivoException;
 import com.ciandt.feedfront.excecoes.BusinessException;
 import com.ciandt.feedfront.excecoes.ComprimentoInvalidoException;
+import com.ciandt.feedfront.excecoes.EmployeeNaoEncontradoException;
 import com.ciandt.feedfront.models.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ public class EmployeeControllerTest {
 
     @BeforeEach
     @SuppressWarnings("unchecked")
-    public void initEach() throws ArquivoException, BusinessException {
+    public void initEach() throws IOException, BusinessException {
         employeeController = new EmployeeController();
         employeeService = (Service<Employee>) Mockito.mock(Service.class);
         employee = new Employee("João", "Silveira", "j.silveira@email.com");
@@ -47,7 +48,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    public void buscar() throws IOException, BusinessException {
+    public void buscar() throws IOException, BusinessException, EmployeeNaoEncontradoException {
         String uuid = employee.getId();
         when(employeeService.buscar(uuid)).thenReturn(employee);
 
@@ -66,7 +67,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    public void atualizar() throws IOException, BusinessException {
+    public void atualizar() throws IOException, BusinessException, EmployeeNaoEncontradoException {
         String uuid = employee.getId();
         employee.setEmail("joao.silveira@email.com");
 
@@ -79,7 +80,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    public void apagar() throws IOException, BusinessException {
+    public void apagar() throws IOException, BusinessException, EmployeeNaoEncontradoException {
         String uuid = employee.getId();
         when(employeeService.buscar(uuid)).thenReturn(employee);
 

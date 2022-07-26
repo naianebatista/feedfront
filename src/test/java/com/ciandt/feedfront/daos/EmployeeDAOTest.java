@@ -2,6 +2,7 @@ package com.ciandt.feedfront.daos;
 
 import com.ciandt.feedfront.contracts.DAO;
 import com.ciandt.feedfront.excecoes.ComprimentoInvalidoException;
+import com.ciandt.feedfront.excecoes.EmployeeNaoEncontradoException;
 import com.ciandt.feedfront.models.Employee;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +16,6 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// O DAO é resposável pela persistência dos dados
-// Com esse mecanismo de persistência (arquivos), não possui responsabilidades de validar regras
 public class EmployeeDAOTest {
     private Employee employee;
     private DAO<Employee> employeeDAO;
@@ -55,7 +54,7 @@ public class EmployeeDAOTest {
     }
 
     @Test
-    public void salvar() throws IOException, ComprimentoInvalidoException {
+    public void salvar() throws IOException, ComprimentoInvalidoException, EmployeeNaoEncontradoException {
         String id = employee.getId();
         Employee employeeSalvo = employeeDAO.buscar(id);
         Employee employeeNaoSalvo = new Employee("Jose", "Silveira", "j.silveira@email.com");
@@ -65,7 +64,7 @@ public class EmployeeDAOTest {
     }
 
     @Test
-    public void atualizarDados() throws IOException, ComprimentoInvalidoException {
+    public void atualizarDados() throws IOException, ComprimentoInvalidoException, EmployeeNaoEncontradoException {
         employee.setNome("bruno");
         employee.setEmail("b.silveira@email.com");
 
