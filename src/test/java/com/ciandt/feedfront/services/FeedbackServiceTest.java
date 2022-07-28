@@ -1,5 +1,6 @@
 package com.ciandt.feedfront.services;
 
+import com.ciandt.feedfront.contracts.DAO;
 import com.ciandt.feedfront.contracts.Service;
 import com.ciandt.feedfront.excecoes.ArquivoException;
 import com.ciandt.feedfront.excecoes.BusinessException;
@@ -40,12 +41,13 @@ public class FeedbackServiceTest {
                     new File(p.toString()).delete();
                 });
 
-        service = (Service<FeedBack>) new FeedbackService();
+    //    service = (Service<FeedBack>) new FeedbackService();
+        service = new FeedbackService();
         autor = new Employee("João", "Silveira", "j.silveira@email.com");
         proprietario = new Employee("Mateus", "Santos", "m.santos@email.com");
 
         feedback = new FeedBack(localDate, autor, proprietario, LOREM_IPSUM_FEEDBACK);
-
+        //service.setDAO(feedbackDao);
         service.salvar(feedback);
     }
 

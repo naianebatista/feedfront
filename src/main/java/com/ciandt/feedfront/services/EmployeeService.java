@@ -15,6 +15,7 @@ public class EmployeeService implements Service<Employee> {
     private DAO<Employee> dao;
 
     public EmployeeService() {
+
         this.dao=new EmployeeDAO();
     }
     @Override

@@ -10,6 +10,7 @@ import java.util.List;
 
 public class FeedbackDAO implements DAO<FeedBack> {
 
+    private final String repositorioPath = "src/main/resources/data/feedback/";
     private String comoMelhora;
 
     public String getComoMelhora() {
@@ -27,7 +28,24 @@ public class FeedbackDAO implements DAO<FeedBack> {
 
     @Override
     public List<FeedBack> listar() throws IOException, EntidadeNaoSerializavelException {
-        return null;
+        List<FeedBack> feedbacks;
+        Stream<Path> paths = Files.walk(Paths.get(repositorioPath));
+
+        List<String> files = paths
+                .map(p -> p.getFileName().toString())
+                .filter(p -> p.endsWith(".byte"))
+                .map(p -> p.replace(".byte", ""))
+                .collect(Collectors.toList());
+
+        feedbacks = files.stream().map(id -> {
+            try {
+                return buscar(id);
+            } catch (IOException ex) {
+                throw new EntidadeNaoSerializavelException();
+            }
+        }).collect(Collectors.toList());
+        return feedbacks;
+
     }
 
     @Override

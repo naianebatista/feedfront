@@ -3,6 +3,7 @@ package com.ciandt.feedfront.daos;
 import com.ciandt.feedfront.contracts.DAO;
 import com.ciandt.feedfront.excecoes.ComprimentoInvalidoException;
 import com.ciandt.feedfront.excecoes.EmployeeNaoEncontradoException;
+import com.ciandt.feedfront.excecoes.EntidadeNaoSerializavelException;
 import com.ciandt.feedfront.models.Employee;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +24,7 @@ public class EmployeeDAOTest {
     @BeforeEach
     public void initEach() throws IOException, ComprimentoInvalidoException {
         // Este trecho de código serve somente para limpar o repositório
-        Files.walk(Paths.get("src/main/resources/data/employee/"))
+        Files.walk(Paths.get("src/main/resources/data/employee/"))//feedback
                 .filter(p -> p.toString().endsWith(".byte"))
                 .forEach(p -> {
                     new File(p.toString()).delete();
@@ -36,7 +37,7 @@ public class EmployeeDAOTest {
     }
 
     @Test
-    public void listar() throws IOException {
+    public void listar() throws IOException, EntidadeNaoSerializavelException {
         List<Employee> result = employeeDAO.listar();
 
         assertFalse(result.isEmpty());
@@ -54,7 +55,7 @@ public class EmployeeDAOTest {
     }
 
     @Test
-    public void salvar() throws IOException, ComprimentoInvalidoException, EmployeeNaoEncontradoException {
+    public void salvar() throws IOException, EntidadeNaoSerializavelException, EmployeeNaoEncontradoException, ComprimentoInvalidoException {
         String id = employee.getId();
         Employee employeeSalvo = employeeDAO.buscar(id);
         Employee employeeNaoSalvo = new Employee("Jose", "Silveira", "j.silveira@email.com");

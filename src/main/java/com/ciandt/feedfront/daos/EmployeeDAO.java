@@ -102,8 +102,9 @@ public class EmployeeDAO implements DAO<Employee> {
             if (emailExistente) {
                 throw new EmailInvalidoException("E-mail ja cadastrado no repositorio");
             }
+            outputStream = getOutputStream(repositorioPath + employee.getId()+ ".byte");
 
-            outputStream = getOutputStream(String.valueOf(employee));
+          //  outputStream = getOutputStream(String.valueOf(employee));
             outputStream.writeObject(employee);
 
             outputStream.close();
