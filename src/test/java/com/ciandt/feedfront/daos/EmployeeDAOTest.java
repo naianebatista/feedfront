@@ -37,7 +37,7 @@ public class EmployeeDAOTest {
     }
 
     @Test
-    public void listar() throws IOException, EntidadeNaoSerializavelException {
+    public void listar() throws IOException {
         List<Employee> result = employeeDAO.listar();
 
         assertFalse(result.isEmpty());

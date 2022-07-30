@@ -25,8 +25,9 @@ public class EmployeeDAO implements DAO<Employee> {
     }
     @Override
     public boolean tipoImplementaSerializable() {
+        return Employee.class instanceof Serializable;
 
-        throw new UnsupportedOperationException();
+       // throw new UnsupportedOperationException();
     }
 
     @Override
@@ -43,22 +44,28 @@ public class EmployeeDAO implements DAO<Employee> {
                     .collect(Collectors.toList());
 
             for (String file: files) {
-                try {
-                    employees.add(buscar(file));
-                } catch (IOException e) {
-                    // Exception silenciada porque sei que não chegará aqui
-                } catch (EmployeeNaoEncontradoException e) {
-                    throw new RuntimeException(e);
-                }
+                employees.add(buscar(file));
             }
-
             paths.close();
-        } catch (IOException e) {
-            throw new EntidadeNaoSerializavelException();
+        } catch (IOException | EmployeeNaoEncontradoException e) {
+            throw new ArquivoException("erro ao processar arquivos");
         }
+
         return employees;
+    }
+    @Override
+    public boolean isEmailExistente(Employee employee) throws IOException {
+        boolean isEmailExistente = false;
+        List<Employee> employees = listar();
 
+        for (Employee employeeSalvo: employees) {
+            if (!employeeSalvo.getId().equals(employee.getId()) && employeeSalvo.getEmail().equals(employee.getEmail())) {
+                isEmailExistente = true;
+                break;
+            }
+        }
 
+        return isEmailExistente;
     }
 
     @Override
@@ -83,39 +90,14 @@ public class EmployeeDAO implements DAO<Employee> {
 
         return employee;
     }
-
     @Override
     public Employee salvar(Employee employee) throws IOException, EntidadeNaoSerializavelException {
-        ObjectOutputStream outputStream = null;
-
-        try {
-            List<Employee> employees = listar();
-
-            boolean emailExistente = false;
-            for (Employee employeeSalvo: employees) {
-                if (!employeeSalvo.getId().equals(employee.getId()) && employeeSalvo.getEmail().equals(employee.getEmail())) {
-                    emailExistente = true;
-                    break;
-                }
-            }
-
-            if (emailExistente) {
-                throw new EmailInvalidoException("E-mail ja cadastrado no repositorio");
-            }
-            outputStream = getOutputStream(repositorioPath + employee.getId()+ ".byte");
-
-          //  outputStream = getOutputStream(String.valueOf(employee));
-            outputStream.writeObject(employee);
-
-            outputStream.close();
-        } catch (IOException | EmailInvalidoException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            throw new UnsupportedOperationException();
-        }
-
+        FileOutputStream fileOut = new FileOutputStream(repositorioPath + employee.getArquivo());
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(employee);
+        out.close();
+        fileOut.close();
         return employee;
-
     }
 
     @Override

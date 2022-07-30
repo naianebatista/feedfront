@@ -75,6 +75,18 @@ public class Employee implements Serializable {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getArquivo() {
+        return arquivo;
+    }
+
+    public void setArquivo(String arquivo) {
+        this.arquivo = arquivo;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

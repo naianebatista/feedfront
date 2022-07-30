@@ -1,5 +1,5 @@
-package com.ciandt.feedfront.services;
 
+package com.ciandt.feedfront.services;
 
 import com.ciandt.feedfront.contracts.DAO;
 import com.ciandt.feedfront.contracts.Service;
@@ -16,8 +16,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-// O Service deve ser capaz de trabalhar em conjunto com o DAO para executar as tarefas
-// Sempre valendo-se das regras de negócio
 public class EmployeeServiceTest {
     private Employee employee;
     private DAO<Employee> employeeDAO;
@@ -25,7 +23,7 @@ public class EmployeeServiceTest {
 
     @BeforeEach
     @SuppressWarnings("unchecked")
-    public void initEach() throws IOException, BusinessException {
+    public void initEach() throws IOException, BusinessException, ComprimentoInvalidoException {
         employeeService = new EmployeeService();
         employeeDAO = (DAO<Employee>) Mockito.mock(DAO.class);
         employee = new Employee("João", "Silveira", "j.silveira@email.com");
@@ -36,20 +34,18 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void listar() throws IOException{
+    public void listar() throws IOException {
         when(employeeDAO.listar()).thenReturn(List.of(employee));
 
         List<Employee> employees = employeeService.listar();
 
-        assertTrue(employees.isEmpty());
-        assertFalse(employees.contains(employee));
-        assertEquals(0, employees.size());
+        assertFalse(employees.isEmpty());
+        assertTrue(employees.contains(employee));
+        assertEquals(1, employees.size());
     }
 
-    // Nota: esses dois métodos estão testando o "buscar" do service
-    // Mas estão separados para reforçar a independência dos testes como manda o padrão FIRST: https://hackernoon.com/test-f-i-r-s-t-65e42f3adc17
     @Test
-    public void buscarMalSucedida() throws  EmployeeNaoEncontradoException, IOException {
+    public void buscarMalSucedida() throws IOException, EmployeeNaoEncontradoException {
         String uuid = "11f2105a-4f5b-4a48-bf57-3a4ff8b477b1";
 
         when(employeeDAO.buscar(uuid)).thenThrow(FileNotFoundException.class);
@@ -76,6 +72,7 @@ public class EmployeeServiceTest {
 
         when(employeeDAO.salvar(employeeValido)).thenReturn(employeeValido);
         when(employeeDAO.listar()).thenReturn(List.of(employee, employeeValido));
+        when(employeeDAO.isEmailExistente(employeeInvalido)).thenReturn(true);
 
         assertDoesNotThrow(() -> employeeService.salvar(employeeValido));
         Exception exception1 = assertThrows(EmailInvalidoException.class, () -> employeeService.salvar(employeeInvalido));
@@ -86,7 +83,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void atualizar() throws IOException, BusinessException, ArquivoException, EmployeeNaoEncontradoException {
+    public void atualizar() throws IOException, ComprimentoInvalidoException, BusinessException, ArquivoException, EmployeeNaoEncontradoException {
         Employee employee2 = new Employee("Bruno", "Silveira", "b.silveira@email.com");
         Employee employee3 = new Employee("Vitor", "Fernandes", "vf.silveira@email.com");
 
@@ -105,13 +102,16 @@ public class EmployeeServiceTest {
         employee2.setNome("Jean");
         employee2.setEmail("joao.silveira@email.com");
 
+        when(employeeDAO.isEmailExistente(employee2)).thenReturn(true);
+
+
         Employee employeeSalvo = assertDoesNotThrow(() -> employeeService.atualizar(employee));
 
         assertEquals(employee, employeeSalvo);
         assertThrows(EntidadeNaoEncontradaException.class, () -> employeeService.atualizar(employee3));
         Exception exception = assertThrows(EmailInvalidoException.class, () -> employeeService.atualizar(employee2));
 
-        assertEquals("E-mail ja cadastrado no repositorio", exception.getMessage());
+        assertEquals("Este e-mail ja esxiste", exception.getMessage());
     }
 
     @Test

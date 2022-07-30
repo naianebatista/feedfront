@@ -3,10 +3,16 @@ package com.ciandt.feedfront.daos;
 import com.ciandt.feedfront.contracts.DAO;
 import com.ciandt.feedfront.excecoes.EmployeeNaoEncontradoException;
 import com.ciandt.feedfront.excecoes.EntidadeNaoSerializavelException;
+import com.ciandt.feedfront.models.Employee;
 import com.ciandt.feedfront.models.FeedBack;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FeedbackDAO implements DAO<FeedBack> {
 
@@ -20,10 +26,18 @@ public class FeedbackDAO implements DAO<FeedBack> {
     public void setComoMelhora(String comoMelhora) {
         this.comoMelhora = comoMelhora;
     }
+    public static ObjectOutputStream getOutputStream(String arquivo) throws IOException {
+        return new ObjectOutputStream(new FileOutputStream(arquivo));
+    }
+
+    public static ObjectInputStream getInputStream(String arquivo) throws IOException {
+        return new ObjectInputStream(new FileInputStream(arquivo));
+    }
 
     @Override
     public boolean tipoImplementaSerializable() {
-        return false;
+
+        return Employee.class instanceof Serializable;
     }
 
     @Override
@@ -40,7 +54,7 @@ public class FeedbackDAO implements DAO<FeedBack> {
         feedbacks = files.stream().map(id -> {
             try {
                 return buscar(id);
-            } catch (IOException ex) {
+            } catch (IOException | EmployeeNaoEncontradoException ex) {
                 throw new EntidadeNaoSerializavelException();
             }
         }).collect(Collectors.toList());
@@ -49,8 +63,26 @@ public class FeedbackDAO implements DAO<FeedBack> {
     }
 
     @Override
+    public boolean isEmailExistente(Employee employee) throws IOException {
+        return false;
+    }
+
+    @Override
     public FeedBack buscar(String id) throws IOException, EntidadeNaoSerializavelException, EmployeeNaoEncontradoException {
-        return null;
+        FeedBack feedback;
+        ObjectInputStream inputStream;
+
+        try {
+            inputStream = getInputStream(repositorioPath + id + ".byte");
+            feedback = (FeedBack) inputStream.readObject();
+
+            inputStream.close();
+
+        } catch (IOException | ClassNotFoundException e) {
+            throw new IOException("");
+        }
+
+        return feedback;
     }
 
     @Override
