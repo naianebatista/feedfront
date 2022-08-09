@@ -1,5 +1,13 @@
 package com.ciandt.feedfront.controllers;
 
+import com.ciandt.feedfront.exceptions.BusinessException;
+import com.ciandt.feedfront.models.Employee;
+import com.ciandt.feedfront.services.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import java.util.List;
 
 //TODO: APLIQUE AS ANOTAÇÕES NECESSÁRIAS PARA QUE O PROGRAMA RECONHEÇA AS DIFERENTES CAMADAS COMO @SERVICE, @RESTCONTROLLER. NÃO ESQUEÇA DAS INJEÇÕES DE DEPENDENCIA COM O @AUTOWIRED
@@ -12,7 +20,9 @@ public class EmployeeController {
 
     // Utilize o exemplo de salvar na classe FeedbackController para implementar os métodos:
 
+    @GetMapping
     public ResponseEntity<List<Employee>> listar()  {
+
         throw new UnsupportedOperationException();
     }
 

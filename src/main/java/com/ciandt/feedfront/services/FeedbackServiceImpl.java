@@ -5,6 +5,7 @@ package com.ciandt.feedfront.services;
 import com.ciandt.feedfront.exceptions.BusinessException;
 import com.ciandt.feedfront.models.Feedback;
 import com.ciandt.feedfront.repositories.FeedbackRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class FeedbackServiceImpl implements FeedbackService {
 
-
+    @Autowired
     private FeedbackRepository feedBackRepository;
 
 

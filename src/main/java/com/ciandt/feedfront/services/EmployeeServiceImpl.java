@@ -3,12 +3,14 @@ package com.ciandt.feedfront.services;
 import com.ciandt.feedfront.exceptions.BusinessException;
 import com.ciandt.feedfront.models.Employee;
 import com.ciandt.feedfront.repositories.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 //TODO: IMPLEMENTE AS CLASSES E MAPEIE A CLASSE PARA O SPRINGBOOT
 public class EmployeeServiceImpl implements EmployeeService {
 
+    @Autowired
     private EmployeeRepository employeeRepository;
 
     @Override
