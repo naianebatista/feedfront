@@ -1,18 +1,15 @@
 package com.ciandt.feedfront.models;
 
-import com.ciandt.feedfront.exceptions.ComprimentoInvalidoException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.Objects;
 
 
 //TODO: UTILIZE ANOTAÇÕES DO LOMBOK COMO @ALLARGSCONSTRUTOR E RETIRE O QUE NÃO FOR MAIS NECESSÁRIO COMO O CONSTRUTOR COM TODOS OS ARGUMENTOS. DEIXE SEU CÓDIGO MAIS SUSCINTO.
@@ -29,6 +26,7 @@ public class Employee {
     @Column  (nullable = false)
     private String nome;
 
+
     @Size(min = 3)
     @Column  (nullable = false)
     private String sobrenome;
@@ -41,6 +39,7 @@ public class Employee {
 
     @OneToMany // fetch = FetchType.LAZY
     private List<Feedback> feedbackRecebidos;
+
 
 
 }

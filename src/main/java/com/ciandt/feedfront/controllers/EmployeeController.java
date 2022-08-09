@@ -4,7 +4,6 @@ import com.ciandt.feedfront.exceptions.BusinessException;
 import com.ciandt.feedfront.models.Employee;
 import com.ciandt.feedfront.services.EmployeeService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,6 @@ import java.util.List;
 @RequestMapping("/v1/employees")
 public class EmployeeController {
 
-    @Autowired
     private EmployeeService employeeService;
 
     // Utilize o exemplo de salvar na classe FeedbackController para implementar os métodos:
@@ -45,8 +43,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> atualizar (@RequestBody Employee employee) throws BusinessException ,UnsupportedOperationException{
-       employeeService.atualizar(employee);
+    public ResponseEntity<Employee> atualizar (@PathVariable Long id,@RequestBody Employee employee) throws BusinessException ,UnsupportedOperationException{
+       employeeService.atualizar(id,employee);
        return ResponseEntity.ok(employee);
     }
 }

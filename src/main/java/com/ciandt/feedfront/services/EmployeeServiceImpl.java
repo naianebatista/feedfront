@@ -6,6 +6,7 @@ import com.ciandt.feedfront.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 //TODO: IMPLEMENTE AS CLASSES E MAPEIE A CLASSE PARA O SPRINGBOOT
 public class EmployeeServiceImpl implements EmployeeService {
@@ -14,23 +15,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Override
-    public List<Employee> listar() {
-        throw new UnsupportedOperationException();
+    public List<Employee> listar() throws UnsupportedOperationException {
+        return employeeRepository.findAll();
     }
 
     @Override
-    public Employee buscar(long id) throws BusinessException {
-        throw new UnsupportedOperationException();
+    public Employee buscar(long id) throws BusinessException,UnsupportedOperationException {
+        Optional<Employee> employee=employeeRepository.findById(id);
+        return employee.get();
     }
 
     @Override
-    public Employee salvar(Employee employee) throws BusinessException {
-        throw new UnsupportedOperationException();
-    }
+    public Employee salvar(Employee employee) throws BusinessException,UnsupportedOperationException {
+        return (Employee) employeeRepository.save(employee);
 
+    }
     @Override
-    public Employee atualizar(Employee employee) throws BusinessException {
-        throw new UnsupportedOperationException();
+    public Long atualizar(Long id, Employee employee) throws BusinessException,UnsupportedOperationException {
+        Optional<Employee> employee1=employeeRepository.findById(id);
+       return employee.getId();
     }
 
     @Override

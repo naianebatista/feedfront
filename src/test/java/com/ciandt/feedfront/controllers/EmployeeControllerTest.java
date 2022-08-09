@@ -4,6 +4,7 @@ import com.ciandt.feedfront.exceptions.BusinessException;
 import com.ciandt.feedfront.models.Employee;
 import com.ciandt.feedfront.services.EmployeeService;
 import com.ciandt.feedfront.services.EmployeeServiceImpl;
+import lombok.Data;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.when;
 
 // A função do controller é tratar as solicitações.
 // Ser capaz de levar o "pedido" ao "cozinheiro" e me trazer o "prato"
+@Data
 @ExtendWith(MockitoExtension.class)
 public class EmployeeControllerTest {
     private Employee employee;
@@ -57,7 +59,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void salvar() throws BusinessException {
-        Employee novoEmployee = new Employee("Cristiano", "Halland", "fifa@email.com");
+        Employee novoEmployee = new Employee("Cristiano", "Halland", "fifa@email.com","");
 
         when(employeeService.salvar(novoEmployee)).thenReturn(novoEmployee);
 
@@ -68,13 +70,13 @@ public class EmployeeControllerTest {
 
     @Test
     public void atualizar() throws BusinessException {
-        long id = employee.getId();
+        Long id = employee.getId();
         employee.setEmail("joao.silveira@email.com");
 
         lenient().when(employeeService.buscar(id)).thenReturn(employee);
-        when(employeeService.atualizar(employee)).thenReturn(employee);
+        when(employeeService.atualizar(id,employee)).thenReturn(employee);
 
-        Employee employeeAtualizado = assertDoesNotThrow(() -> employeeController.atualizar(employee)).getBody();
+        Employee employeeAtualizado = assertDoesNotThrow(() -> employeeController.atualizar(id,employee)).getBody();
 
         assertEquals(employee, employeeAtualizado);
     }

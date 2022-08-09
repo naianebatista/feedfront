@@ -11,13 +11,10 @@ import java.util.List;
 
 //TODO: IMPLEMENTE AS CLASSES E MAPEIE A CLASSE PARA O SPRINGBOOT
 
-
-
 public class FeedbackServiceImpl implements FeedbackService {
 
     @Autowired
     private FeedbackRepository feedBackRepository;
-
 
     @Override
     public List<Feedback> listar() {

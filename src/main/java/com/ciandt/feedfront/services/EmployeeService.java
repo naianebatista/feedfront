@@ -9,13 +9,14 @@ import java.util.List;
 
 public interface EmployeeService  {
 
-    List<Employee> listar();
+
+    List<Employee> listar() throws UnsupportedOperationException;
 
     Employee buscar(long id) throws BusinessException;
 
     Employee salvar(Employee e) throws BusinessException, IllegalArgumentException;
 
-    Employee atualizar(Employee e) throws BusinessException, IllegalArgumentException;
+    Long atualizar(Long id, Employee e) throws BusinessException, IllegalArgumentException;
 
     void apagar(long id) throws BusinessException;
 }
