@@ -6,12 +6,13 @@ import com.ciandt.feedfront.exceptions.BusinessException;
 import com.ciandt.feedfront.models.Feedback;
 import com.ciandt.feedfront.repositories.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 //TODO: IMPLEMENTE AS CLASSES E MAPEIE A CLASSE PARA O SPRINGBOOT
-
+@Service
 public class FeedbackServiceImpl implements FeedbackService {
 
     @Autowired

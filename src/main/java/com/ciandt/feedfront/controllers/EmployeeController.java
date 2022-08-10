@@ -4,6 +4,7 @@ import com.ciandt.feedfront.exceptions.BusinessException;
 import com.ciandt.feedfront.models.Employee;
 import com.ciandt.feedfront.services.EmployeeService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,8 @@ import java.util.List;
 @RequestMapping("/v1/employees")
 public class EmployeeController {
 
-    private EmployeeService employeeService;
+    @Autowired
+     EmployeeService employeeService;
 
     // Utilize o exemplo de salvar na classe FeedbackController para implementar os métodos:
     @ApiOperation(value = "Este retorna todos os dados enviados pelos usuários no banco de dados.")

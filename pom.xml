@@ -25,7 +25,7 @@
   </properties>
 
   <!-- TODO: ADICIONAR AS DEPENDENCIAS spring-boot-starter-data-jpa, spring-boot-devtools, spring-boot-starter-web -->
-  <!--  springfox-swagger2, springfox-swagger-ui, lombok, com.h2database, spring-boot-starter-test, spring-boot-maven-plugin (Caso já tenha adicionado algumas dessas dependências, tranquilo :) ) -->
+  <!--  springfox-swagger2, springfox-swagger-ui, lombok, com.h2database, spring-boot-starter-test, spring-boot-maven-plugin (Caso jÃ¡ tenha adicionado algumas dessas dependÃªncias, tranquilo :) ) -->
 
 
   <dependencies>
@@ -85,14 +85,23 @@
     <dependency> <groupId>io.springfox</groupId>
       <artifactId>springfox-boot-starter</artifactId>
       <version>3.0.0</version> </dependency>
+
+<!--     <dependency> <groupId>javax.validation</groupId>-->
+<!--      <artifactId>validation-api</artifactId>-->
+<!--      <version>1.1.0.Final</version> </dependency>-->
+
     <dependency>
       <groupId>org.apache.ant</groupId>
       <artifactId>ant</artifactId>
       <version>1.8.1</version>
     </dependency>
-    <dependency> <groupId>javax.validation</groupId>
-      <artifactId>validation-api</artifactId>
-      <version>1.1.0.Final</version> </dependency>
+
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <version>1.6.9</version>
+    </dependency>
+
   </dependencies>
 
   <build>

@@ -6,6 +6,7 @@ import com.ciandt.feedfront.models.Feedback;
 import com.ciandt.feedfront.services.EmployeeService;
 import com.ciandt.feedfront.services.FeedbackService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/feedbacks")
 public class FeedbackController {
+    @Autowired
     private FeedbackService feedbackService;
-    private EmployeeService employeeService;
 
     @ApiOperation(value = "Este retorna todos os dados enviados pelos usuários no banco de dados.")
     @GetMapping

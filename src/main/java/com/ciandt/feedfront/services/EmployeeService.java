@@ -14,7 +14,7 @@ public interface EmployeeService  {
 
     Employee buscar(long id) throws BusinessException;
 
-    Employee salvar(Employee e) throws BusinessException, IllegalArgumentException;
+    Employee salvar(Employee employee) throws BusinessException, IllegalArgumentException;
 
     Long atualizar(Long id, Employee e) throws BusinessException, IllegalArgumentException;
 
