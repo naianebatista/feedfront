@@ -39,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void apagar(long id) throws BusinessException {
-        throw new UnsupportedOperationException();
+    public void apagar(long id) throws BusinessException,UnsupportedOperationException {
+       employeeRepository.deleteById(id);
     }
 }
