@@ -32,7 +32,7 @@ public class EmployeeController {
         return  ResponseEntity.ok(employeeService.buscar(id));
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Employee> salvar(@RequestBody Employee employee) throws BusinessException ,UnsupportedOperationException{
         employeeService.salvar(employee);
         return ResponseEntity.ok(employee);
@@ -44,9 +44,9 @@ public class EmployeeController {
        return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<Employee> atualizar (@PathVariable Long id,@RequestBody Employee employee) throws BusinessException ,UnsupportedOperationException{
-       employeeService.atualizar(id,employee);
-       return ResponseEntity.ok(employee);
+      employee = employeeService.atualizar(id,employee);
+       return ResponseEntity.ok().body(employee);
     }
 }

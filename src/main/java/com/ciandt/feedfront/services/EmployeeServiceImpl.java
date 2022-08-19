@@ -6,6 +6,8 @@ import com.ciandt.feedfront.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,11 +34,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.save(employee);
 
     }
+    @Transactional
     @Override
-    public Long atualizar(Long id, Employee employee) throws BusinessException,UnsupportedOperationException {
-        Optional<Employee> employee1=employeeRepository.findById(id);
-       return employee.getId();
+    public Employee atualizar(Long id, Employee employee) throws BusinessException,UnsupportedOperationException {
+
+        Optional<Employee> obj = employeeRepository.findById(id);
+        Employee entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not found"));
+
+        entity.setNome(employee.getNome());
+        entity.setSobrenome(employee.getSobrenome());
+        entity.setEmail(employee.getEmail());
+        entity = employeeRepository.save(entity);
+
+        return entity;
     }
+//    public Long atualizar(Long id, Employee employee) throws BusinessException,UnsupportedOperationException {
+//        Optional<Employee> employee1=employeeRepository.findById(id);
+//       return employee.getId();
+//    }
 
     @Override
     public void apagar(long id) throws BusinessException,UnsupportedOperationException {

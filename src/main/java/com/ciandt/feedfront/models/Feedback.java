@@ -1,6 +1,7 @@
 package com.ciandt.feedfront.models;
 
 import com.ciandt.feedfront.exceptions.ComprimentoInvalidoException;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,8 +27,10 @@ public class Feedback {
     private String oQueMelhora;
     @Column
     private String comoMelhora;
+
+    @JsonFormat(pattern="MM/dd/yyyy")
     @Column
-    private LocalDate data;
+    private LocalDate data ;
 
     @ManyToOne //(fetch = FetchType.EAGER)
     @JoinColumn(name = "autor_id")
