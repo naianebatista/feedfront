@@ -13,6 +13,7 @@ import java.util.Optional;
 
 //TODO: IMPLEMENTE AS CLASSES E MAPEIE A CLASSE PARA O SPRINGBOOT
 @Service
+@Transactional
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired

@@ -8,15 +8,23 @@ import com.ciandt.feedfront.repositories.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 //TODO: IMPLEMENTE AS CLASSES E MAPEIE A CLASSE PARA O SPRINGBOOT
 @Service
+@Transactional
 public class FeedbackServiceImpl implements FeedbackService {
 
     @Autowired
     private FeedbackRepository feedBackRepository;
+    private final EmployeeService employeeService;
+
+    public FeedbackServiceImpl(FeedbackRepository feedBackRepository, EmployeeService employeeService) {
+        this.feedBackRepository = feedBackRepository;
+        this.employeeService = employeeService;
+    }
 
     @Override
     public List<Feedback> listar() throws  UnsupportedOperationException{

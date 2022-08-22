@@ -33,11 +33,11 @@ public class Employee {
     private String email;
 
     @JsonIgnore
-    @OneToMany // fetch = FetchType.LAZY
+    @OneToMany(mappedBy = "autor")
     private List<Feedback> feedbackFeitos;
 
     @JsonIgnore
-    @OneToMany // fetch = FetchType.LAZY
+    @OneToMany(mappedBy = "proprietario")
     private List<Feedback> feedbackRecebidos;
 
 
