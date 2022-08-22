@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 public class Feedback {
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
     @Column
@@ -28,16 +30,15 @@ public class Feedback {
     @Column
     private String comoMelhora;
 
-    @JsonFormat(pattern="MM/dd/yyyy")
-    @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate data ;
 
-    @ManyToOne //(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "autor_id")
     private Employee autor;
 
-    @ManyToOne //(fetch = FetchType.EAGER)
-    @JoinColumn(name = "proprietario_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "proprietario_id")
     private Employee proprietario;
 
 

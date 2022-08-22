@@ -2,6 +2,7 @@ package com.ciandt.feedfront.controllers;
 
 
 import com.ciandt.feedfront.exceptions.BusinessException;
+import com.ciandt.feedfront.models.Employee;
 import com.ciandt.feedfront.models.Feedback;
 import com.ciandt.feedfront.services.EmployeeService;
 import com.ciandt.feedfront.services.FeedbackService;
@@ -9,7 +10,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 //TODO: APLIQUE AS ANOTAÇÕES NECONHEÇA AS DIESSÁRIAS PARA QUE O PROGRAMA RECFERENTES CAMADAS COMO @SERVICE, @RESTCONTROLLER. NÃO ESQUEÇA DAS INJEÇÕES DE DEPENDENCIA COM O @AUTOWIRED
@@ -31,11 +34,9 @@ public class FeedbackController {
     public ResponseEntity<Feedback> buscar(@PathVariable long id) throws BusinessException, UnsupportedOperationException {
         return ResponseEntity.ok(feedbackService.buscar(id));
     }
-
     @PostMapping
-    public ResponseEntity<Feedback> salvar(@RequestBody Feedback feedback) throws BusinessException, UnsupportedOperationException {
-         feedbackService.salvar(feedback);
-        return ResponseEntity.ok(feedback);
-
-    }
+    public ResponseEntity<Feedback> salvar(@RequestBody Feedback feedback) throws BusinessException ,UnsupportedOperationException{
+    feedbackService.salvar(feedback);
+    return ResponseEntity.ok(feedback);
+}
 }

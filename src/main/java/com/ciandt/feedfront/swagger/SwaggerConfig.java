@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 @Component
-@RestController
+//@RestController
 public class SwaggerConfig {
 
     @Bean
@@ -28,17 +28,19 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(metaData());
+
     }
 
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
-                .title("TITULO DO SEU PROJETO ")
-                .description("\"Desenvolvido por EU\"")
+                .title("Feedfront")
+                .description("\"Desenvolvido por joseff\"")
                 .version("1.0.0")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
                 .build();
     }
+
 
 
 }
